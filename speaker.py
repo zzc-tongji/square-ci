@@ -39,10 +39,8 @@ class Speaker(Thread):
                 # https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
                 #
                 # (POST)
-                #
-                # TODO: act as replace, a bug of GitHub API
                 url = 'https://api.github.com/repos/' + item['repo']['remote_path'] \
-                      + '/issues/' + item['issue_number']
+                      + '/issues/' + item['issue_number'] + '/labels'
                 payload = json.dumps({'labels': ['square-ci']})
                 r = requests.post(url, headers=self.headers, data=payload)
                 print('POST:', url)
