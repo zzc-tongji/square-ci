@@ -72,7 +72,7 @@ class Speaker(Thread):
                 url = 'https://api.github.com/repos/' + item['repo']['remote_path'] + \
                       '/pulls/' + item['issue_number']
                 r = requests.get(url, headers=self.headers)
-                data = json.loads(r.content)
+                data = json.loads(r.content.decode('UTF-8'))
                 print('GET:', url)
                 print('receive: ', r.content.decode('UTF-8'))
                 # https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
