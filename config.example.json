@@ -1,0 +1,23 @@
+{
+  "listener_port": 1000,
+  "sleeper_delay_second": 5,
+  "user_token": "01234567890abcdef01234567890abcdef012345",
+  "repo_list": [
+    {
+      "local_directory": "repo1",
+      "remote_path": "username/repo1",
+      "script": {
+        "test": "test.sh",
+        "update": "update.sh"
+      }
+    },
+    {
+      "local_directory": "repo2",
+      "remote_path": "username/repo2",
+      "script": {
+        "test": "test.sh",
+        "update": "update.sh"
+      }
+    }
+  ]
+}
