@@ -71,7 +71,8 @@ class Worker(Thread):
                         'https://github.com/' + item['merge_from']['remote_path'] + '.git',
                         item['merge_from']['branch']
                     ],
-                    capture_output=True
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT
                 )
                 if result.returncode == 0:
                     # create a comment (passed)
@@ -79,10 +80,8 @@ class Worker(Thread):
                         'type': 'beta-1',
                         'repo': item['repo'],
                         'issue_number': item['issue_number'],
-                        'body': '### Square CI\n\nstatus\n\n```\nPASSED\n```\n\nstdout\n\n```'
+                        'body': '### Square CI\n\nstatus\n\n```\nPASSED\n```\n\noutput\n\n```'
                                 + result.stdout.decode('UTF-8')
-                                + '\n```\n\nstderr\n\n```\n'
-                                + result.stderr.decode('UTF-8')
                                 + '\n```\n'
                     })
                     # merge pull request
@@ -97,10 +96,8 @@ class Worker(Thread):
                         'type': 'beta-1',
                         'repo': item['repo'],
                         'issue_number': item['issue_number'],
-                        'body': '### Square CI\n\nstatus\n\n```\nFAILED\n```\n\nstdout\n\n```'
+                        'body': '### Square CI\n\nstatus\n\n```\nFAILED\n```\n\noutput\n\n```'
                                 + result.stdout.decode('UTF-8')
-                                + '\n```\n\nstderr\n\n```\n'
-                                + result.stderr.decode('UTF-8')
                                 + '\n```\n'
                     })
                     # remove label "square-ci"
@@ -126,16 +123,15 @@ class Worker(Thread):
                 result = subprocess.run(
                     'cd ' + path + ' && ' + '.' + os.sep + item['repo']['script']['update'],
                     shell=True,
-                    capture_output=True
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT
                 )
                 # create a comment (updated)
                 self.queue_beta.put({
                     'type': 'beta-1',
                     'repo': item['repo'],
                     'issue_number': item['issue_number'],
-                    'body': '### Square CI\n\nstatus\n\n```\nUPDATED\n```\n\nstdout\n\n```'
+                    'body': '### Square CI\n\nstatus\n\n```\nUPDATED\n```\n\noutput\n\n```'
                             + result.stdout.decode('UTF-8')
-                            + '\n```\n\nstderr\n\n```\n'
-                            + result.stderr.decode('UTF-8')
                             + '\n```\n'
                 })

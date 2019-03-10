@@ -38,7 +38,8 @@ for repo in config['repo_list']:
             repo['script']['test'],
             repo['script']['update']
         ],
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         check=True
     )
 

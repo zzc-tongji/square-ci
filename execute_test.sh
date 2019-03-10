@@ -33,10 +33,16 @@ git checkout -b test
 git pull ${REPO} ${BRANCH_NAME}
 
 # test
+echo
+echo ============================================================
+echo
 set +e
 ./${TEST_SCRIPT}
 RESULT=$?
 set -e
+echo
+echo ============================================================
+echo
 
 # reset environment
 git checkout master
